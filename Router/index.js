@@ -4,7 +4,7 @@ const authentication = require("./authentication.routes")
 
 const initial = (app) => {
 
-    app.use("/auth", authentication)
+    app.use("/a", authentication)
 }
 
 
