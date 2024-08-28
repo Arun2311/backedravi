@@ -1,29 +1,51 @@
 
+const AuthUser = require("../Model/auth.modal")
+const bcrypt = require("bcryptjs")
 
 
+class AuthenticationController { }
 
-class AuthenticationController {}
 
+AuthenticationController.register = async (req, res, nxt) => {
 
-AuthenticationController.register = async (req,res,nxt)=>{
+    try {
 
-    try{
-
-        console.log(req ,"arun");
+        const salt = await bcrypt.genSalt(10)
+        const hashpassword = await bcrypt.hash(req.body.password, salt)
         
+        req.body.password = hashpassword
 
+        let user = await new AuthUser(req.body)
 
+        await user.save()
+         
         res.send({
-            status:"sucess"
+            succes: true,
+            message: "user register succesfully"
         })
 
-    }catch(err){
+
+
+    } catch (err) {
+        nxt(err)
 
     }
 
 }
 
 
-module.exports={
+AuthenticationController.login = async (req, res, nxt) =>{
+    try{
+        console.log(req.body);
+        
+
+    }catch(err){
+         nxt(err)
+    }
+
+}
+
+
+module.exports = {
     AuthenticationController
 }

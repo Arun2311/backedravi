@@ -1,10 +1,14 @@
 const authentication = require("./authentication.routes")
 
+const express = require("express")
+const app = express()
 
 
-const initial = (app) => {
+const initial = () => {
 
-    app.use("/a", authentication)
+    app.use("/auth", authentication),
+    app.use("/student", authentication)
+
 }
 
 
